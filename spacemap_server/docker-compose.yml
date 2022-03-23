@@ -6,14 +6,15 @@ services:
     image: mariadb:10.7
     ports:
       - 3306:3306
-    # env_file:
-    #   - .env
-    environment:
-      - MYSQL_ROOT_PASSWORD=passtest
-      - MYSQL_DATABASE=testdb2
-      - MYSQL_USER=t
-      - MYSQL_PASSWORD=passtest
-      - TZ=Asia/Seoul
+    env_file:
+      - .env
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=passtest
+    #   - MYSQL_DATABASE=testdb2
+    #   - MYSQL_USER=t
+    #   - MYSQL_PASSWORD=passtest
+    #   - TZ=Asia/Seoul
+    restart: always
     volumes:
       - C:/volume_db/mariadb/data:/var/lib/mysql
       - C:/volume_db/mariadb/conf.d:/etc/mysql/conf.d
@@ -22,10 +23,11 @@ services:
       
   spacemap_server:
     container_name: server
-    # image: jiminu/servertest
-    build: .
+    image: jiminu/spacemap_server
+    # build: .
     depends_on:
       - maria-db
+    restart: always
     ports:
       - 3003:3003
     command: tail -f /dev/null
