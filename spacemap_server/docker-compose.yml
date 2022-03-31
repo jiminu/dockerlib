@@ -4,6 +4,8 @@ services:
   maria-db:
     container_name: database
     image: mariadb:10.7
+    init:
+      true
     ports:
       - 3306:3306
     # env_file:
@@ -24,6 +26,8 @@ services:
   spacemap_server:
     container_name: server
     image: jiminu/spacemap_server
+    init:
+      true
     # build: .
     depends_on:
       - maria-db
