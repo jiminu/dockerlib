@@ -1,5 +1,6 @@
 version: "3"
 
+# services 하위로 한 묶음
 services:
   maria-db:
     container_name: database
@@ -7,16 +8,17 @@ services:
     init:
       true
     ports:
+      # host port : container port
       - 4306:3306
-    # env_file:
-    #   - .env
     environment:
+      # Set time zone
       - TZ=UTC
       - MYSQL_PORT=3306
       - MYSQL_ROOT_PASSWORD=1q2w3e4r
       - MYSQL_DATABASE=spacemap_db
     restart: always
     volumes:
+      # host path : container path
       - C:/volume_db/mariadb/data:/var/lib/mysql
       - C:/volume_db/mariadb/conf.d:/etc/mysql/conf.d
       - C:/volume_db/mariadb/sql:/docker-entrypoint-initdb.d 
@@ -28,11 +30,12 @@ services:
     image: jiminu/spacemap_server
     init:
       true
-    # build: .
     depends_on:
+      # Set dependencies. In order to start this container, maria-db must be start first.
       - maria-db
     restart: always
     ports:
+      # host port : container port
       - 4003:3003
     command: tail -f /dev/null
     networks:
