@@ -4,12 +4,13 @@ services:
   maria-db:
     container_name: database
     image: mariadb:10.7
+    # build: 
+    #   context: .
+    #   dockerfile: dockerfile_db
     init:
       true
     ports:
       - 4306:3306
-    # env_file:
-    #   - .env
     environment:
       - TZ=UTC
       - MYSQL_PORT=3306
